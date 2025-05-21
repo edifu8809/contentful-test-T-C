@@ -1,0 +1,30 @@
+
+<div class="header">
+    <div *ngIf="brand">
+        <img [src]="brand.logo" alt="Brand logo">
+    </div>
+</div>
+<div class="tabs-container">
+    <div class="tabs">
+      <button
+        *ngFor="let tab of tabs; let i = index"
+        class="tab-button"
+        [class.active]="i === activeTab"
+        (click)="selectTab(i)"
+      >
+        <img [src]="tab.icon" alt="Icono" />
+        {{ tab.title }}
+      </button>
+    </div>
+  
+    <div class="tab-contents">
+      <div
+        *ngFor="let tab of tabs; let i = index"
+        class="tab-content"
+        [class.active]="i === activeTab"
+   
+      >
+        <div [innerHTML]="tab.description"></div>
+      </div>
+    </div>
+</div>
