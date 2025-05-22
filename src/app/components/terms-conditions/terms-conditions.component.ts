@@ -12,7 +12,12 @@ import gsap from 'gsap';
 export class TermsConditionsComponent implements OnInit {
   locale = 'es';
   slug = '';
-  brand: { logo: string } | null = null;
+  brand: {
+    logo: string;
+    primaryColor: string;
+    accentColor: string;
+    textColor: string;
+  } | null = null;
   tabs: { title: string; description: string; icon: string }[] = [];
   activeTab: number = 0;
 
@@ -34,7 +39,10 @@ export class TermsConditionsComponent implements OnInit {
         }
   
         this.brand = {
-          logo: data.logoUrl || ''
+          logo: data.logoUrl || '',
+          primaryColor: data.primaryColor,
+          accentColor: data.accentColor,
+          textColor: data.textColor
         };
   
         this.tabs = (data.tabs || []).map((tab: any) => ({
@@ -52,29 +60,6 @@ export class TermsConditionsComponent implements OnInit {
   }
   
 
-  loadContent() {
-    this.contentful.getBrandTerms(this.slug, this.locale).subscribe((res: any) => {
-      const entry = res?.items?.[0]?.fields;
-
-      if (!entry) {
-        console.warn('No se encontró contenido para este slug:', this.slug);
-        return;
-      }
-
-      this.brand = {
-        logo: entry.logo?.fields?.file?.url ?? ''
-      };
-
-      this.tabs = (entry.tabs || []).map((tab: any) => ({
-        title: tab?.fields?.title ?? 'Sin título',
-        description: documentToHtmlString(tab?.fields?.description),
-        icon: tab?.fields?.icon?.fields?.file?.url ?? ''
-      }));
-
-      this.activeTab = 0;
-      setTimeout(() => this.animateTab(0), 100);
-    });
-  }
 
   selectTab(index: number) {
     if (index === this.activeTab) return;

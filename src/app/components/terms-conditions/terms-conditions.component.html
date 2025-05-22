@@ -4,9 +4,14 @@
   </div>
 </div>
 
-<div class="tabs-container">
+<div class="tabs-container" [ngStyle]="{
+  'background-color': brand?.primaryColor
+}">
   <div class="tabs">
     <button
+    [ngStyle]="{
+      'background-color': brand?.accentColor
+    }"
       *ngFor="let tab of tabs; let i = index"
       class="tab-button"
       [class.active]="i === activeTab"
@@ -23,7 +28,10 @@
       class="tab-content"
       [class.active]="i === activeTab"
     >
-      <div [innerHTML]="tab.description"></div>
+      <div [ngStyle]="{
+       
+        'color': brand?.textColor
+      }" [innerHTML]="tab.description"></div>
     </div>
   </div>
 </div>

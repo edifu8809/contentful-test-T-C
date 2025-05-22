@@ -38,14 +38,21 @@ export class ContentfulService {
     return {
       slug: entry.fields.slug,
       logoUrl: entry.fields.logo?.fields?.file?.url,
-      tabs: (entry.fields.tabs || []).map((tabRef: any) => {
+      primaryColor: entry.fields.primaryColor ?? '#ffffff',
+      accentColor: entry.fields.accentColor ?? '#ff0000',
+      textColor: entry.fields.textColor ?? '#000000',
+      tabs: (entry.fields.tabs || []).map((tabRef: any, i: number) => {
+        if (!tabRef?.fields) {
+          console.warn(`Tab en posición ${i} no tiene fields definidos`, tabRef);
+          return null;
+        }
         const tab = tabRef.fields;
         return {
-          title: tab.title,
-          description: tab.description, // puede ser string o rich text
-          icon: tab.icon?.fields?.file?.url
+          title: tab.title ?? 'Sin título',
+          description: tab.description,
+          icon: tab.icon?.fields?.file?.url ?? ''
         };
-      })
+      }).filter(Boolean) // elimina los nulls
     };
   }
   getBrandTermsWithFallback(slug: string, locale: string): Observable<any> {
