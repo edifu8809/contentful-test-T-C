@@ -1,11 +1,13 @@
 .tabs-container,
-.header
+.header{
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1rem;
+  display: flex;
+}
 .tabs-container {
-    width: 100%;
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 1rem;
-    display: flex;
+    
     .tabs {
         display: flex;
         gap: 1rem;
