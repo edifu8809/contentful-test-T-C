@@ -4,10 +4,9 @@ import { TermsConditionsComponent } from './components/terms-conditions/terms-co
 
 
 const routes: Routes = [
-  { path: '', redirectTo: '/terminos/marca-x', pathMatch: 'full' },
-  { path: 'terminos/:slug', component: TermsConditionsComponent },
+  { path: '', redirectTo: '/es/terminos/marca-x', pathMatch: 'full' },
+  { path: ':lang/terminos/:slug', component: TermsConditionsComponent },
 ];
-
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]

@@ -3,44 +3,79 @@ import { ActivatedRoute } from '@angular/router';
 import { ContentfulService } from 'src/app/contentful.service';
 import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
 import gsap from 'gsap';
+
 @Component({
   selector: 'app-terms-conditions',
   templateUrl: './terms-conditions.component.html',
   styleUrls: ['./terms-conditions.component.scss']
 })
 export class TermsConditionsComponent implements OnInit {
-  brand: any;
-  tabs: any[] = [];
+  locale = 'es';
+  slug = '';
+  brand: { logo: string } | null = null;
+  tabs: { title: string; description: string; icon: string }[] = [];
   activeTab: number = 0;
+
   constructor(
     private route: ActivatedRoute,
     private contentful: ContentfulService
   ) {}
 
   ngOnInit() {
-    setTimeout(() => this.animateTab(0), 100);
-    const slug = this.route.snapshot.paramMap.get('slug')!;
-    this.contentful.getBrandTerms(slug).subscribe((res: any) => {
-      const entry = res.items?.[0]?.fields;
+    this.route.paramMap.subscribe(params => {
+      this.slug = params.get('slug') || '';
+      const langParam = params.get('lang') || 'es';
+      this.locale = langParam === 'en' ? 'en-US' : 'es-ES';
   
-      if (!entry) {
-        console.warn('No se encontró contenido para este slug:', slug);
-        return;
-      }
+      this.contentful.getTermsWithFieldFallback(this.slug, this.locale).subscribe(data => {
+        if (!data) {
+          console.warn('No se encontró contenido para este slug:', this.slug);
+          return;
+        }
   
-      this.brand = {
-        logo: entry.logo?.fields?.file?.url || ''
-      };
+        this.brand = {
+          logo: data.logoUrl || ''
+        };
   
-      console.log('Tabs recibidos:', entry.tabs);
+        this.tabs = (data.tabs || []).map((tab: any) => ({
+          title: tab.title ?? 'Sin título',
+          description: typeof tab.description === 'string'
+            ? tab.description
+            : documentToHtmlString(tab.description),
+          icon: tab.icon ?? ''
+        }));
   
-      this.tabs = (entry.tabs || []).map((tab: any) => ({
-        title: tab?.fields?.title ?? 'Sin título',
-        description: documentToHtmlString(tab?.fields?.description),  // <- Aquí lo convertimos a HTML
-        icon: tab?.fields?.icon?.fields?.file?.url ?? ''
-      }));
+        this.activeTab = 0;
+        setTimeout(() => this.animateTab(0), 100);
+      });
     });
   }
+  
+
+  loadContent() {
+    this.contentful.getBrandTerms(this.slug, this.locale).subscribe((res: any) => {
+      const entry = res?.items?.[0]?.fields;
+
+      if (!entry) {
+        console.warn('No se encontró contenido para este slug:', this.slug);
+        return;
+      }
+
+      this.brand = {
+        logo: entry.logo?.fields?.file?.url ?? ''
+      };
+
+      this.tabs = (entry.tabs || []).map((tab: any) => ({
+        title: tab?.fields?.title ?? 'Sin título',
+        description: documentToHtmlString(tab?.fields?.description),
+        icon: tab?.fields?.icon?.fields?.file?.url ?? ''
+      }));
+
+      this.activeTab = 0;
+      setTimeout(() => this.animateTab(0), 100);
+    });
+  }
+
   selectTab(index: number) {
     if (index === this.activeTab) return;
     this.activeTab = index;
