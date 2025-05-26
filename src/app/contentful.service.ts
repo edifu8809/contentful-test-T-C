@@ -44,6 +44,8 @@ export class ContentfulService {
       textColor: entry.fields.textColor ?? '#000000',
       seoTitle: entry.fields.seoTitle ?? '',
       seoDescription: entry.fields.seoDescription ?? '',
+      logoFooter: entry.fields.logoFooter?.fields?.file?.url ?? '',
+      copyrightFooter: entry.fields.copyrightFooter ?? '', 
       faviconUrl: entry.fields.favicon?.fields?.file?.url ?? '',
       tabs: (entry.fields.tabs || []).map((tabRef: any, i: number) => {
         if (!tabRef?.fields) {
@@ -88,6 +90,7 @@ export class ContentfulService {
             return {
               ...localEntry,
               logoUrl: localEntry.logoUrl || fallbackEntry.logoUrl,
+              logoFooter: localEntry.logoFooter || fallbackEntry.logoFooter,
               tabs: (localEntry.tabs || []).map((tab: any, i: number) => {
                 const fallbackTab = fallbackEntry.tabs?.[i] || {};
                 return {

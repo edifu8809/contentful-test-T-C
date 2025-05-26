@@ -20,6 +20,8 @@ export class TermsConditionsComponent implements OnInit {
     primaryColor: string;
     accentColor: string;
     textColor: string;
+    logoFooter: string;
+    copyrightFooter: string;
   } | null = null;
   seo: {
     title: string;
@@ -56,7 +58,9 @@ export class TermsConditionsComponent implements OnInit {
           nombre: data.nombre,
           primaryColor: data.primaryColor,
           accentColor: data.accentColor,
-          textColor: data.textColor
+          textColor: data.textColor,
+          logoFooter: data.logoFooter,
+          copyrightFooter: data.copyrightFooter
         };
 
         // SEO info
