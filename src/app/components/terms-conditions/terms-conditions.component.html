@@ -1,12 +1,18 @@
-<div class="header">
-  <div *ngIf="brand">
-    <img [src]="brand.logo" alt="Brand logo" />
+<div *ngIf="brand">
+  <div class="container-header" [ngStyle]="{ 'background-color': brand.primaryColor }">
+    <div class="header">
+      <img [src]="brand.logo" alt="Brand logo" />
+    </div>
   </div>
+
+  <h1 class="name-tittle">{{ brand.nombre }}</h1>
 </div>
+
 
 <div class="tabs-container" [ngStyle]="{
   'background-color': brand?.primaryColor
 }">
+ 
   <div class="tabs">
     <button
     [ngStyle]="{

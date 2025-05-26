@@ -38,6 +38,7 @@ export class ContentfulService {
     return {
       slug: entry.fields.slug,
       logoUrl: entry.fields.logo?.fields?.file?.url,
+      nombre: entry.fields.nombre ?? '', 
       primaryColor: entry.fields.primaryColor ?? '#ffffff',
       accentColor: entry.fields.accentColor ?? '#ff0000',
       textColor: entry.fields.textColor ?? '#000000',

@@ -14,6 +14,7 @@ export class TermsConditionsComponent implements OnInit {
   slug = '';
   brand: {
     logo: string;
+    nombre: string;
     primaryColor: string;
     accentColor: string;
     textColor: string;
@@ -40,11 +41,12 @@ export class TermsConditionsComponent implements OnInit {
   
         this.brand = {
           logo: data.logoUrl || '',
+          nombre: data.nombre,
           primaryColor: data.primaryColor,
           accentColor: data.accentColor,
           textColor: data.textColor
         };
-  
+        console.log(this.brand)
         this.tabs = (data.tabs || []).map((tab: any) => ({
           title: tab.title ?? 'Sin título',
           description: typeof tab.description === 'string'
