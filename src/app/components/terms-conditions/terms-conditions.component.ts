@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ContentfulService } from 'src/app/contentful.service';
 import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
+import { Title, Meta } from '@angular/platform-browser';
 import gsap from 'gsap';
 
 @Component({
@@ -19,12 +20,19 @@ export class TermsConditionsComponent implements OnInit {
     accentColor: string;
     textColor: string;
   } | null = null;
+  seo: {
+    title: string;
+    description: string;
+    favicon: string;
+  } = { title: '', description: '', favicon: '' };
   tabs: { title: string; description: string; icon: string }[] = [];
   activeTab: number = 0;
 
   constructor(
     private route: ActivatedRoute,
-    private contentful: ContentfulService
+    private contentful: ContentfulService,
+    private titleService: Title,
+    private metaService: Meta
   ) {}
 
   ngOnInit() {
@@ -39,6 +47,7 @@ export class TermsConditionsComponent implements OnInit {
           return;
         }
   
+        // ✅ Configurar info de marca
         this.brand = {
           logo: data.logoUrl || '',
           nombre: data.nombre,
@@ -46,6 +55,30 @@ export class TermsConditionsComponent implements OnInit {
           accentColor: data.accentColor,
           textColor: data.textColor
         };
+
+        // SEO info
+        this.seo = {
+          title: data.seoTitle,
+          description: data.seoDescription,
+          favicon: data.faviconUrl
+        };
+
+        // Aplicar título y meta description
+        this.titleService.setTitle(this.seo.title || 'Default Title');
+        this.metaService.updateTag({
+          name: 'description',
+          content: this.seo.description || ''
+        });
+
+        // Cambiar favicon
+        if (this.seo.favicon) {
+          const link: HTMLLinkElement =
+            document.querySelector("link[rel*='icon']") || document.createElement('link');
+          link.type = 'image/x-icon';
+          link.rel = 'shortcut icon';
+          link.href = this.seo.favicon;
+          document.getElementsByTagName('head')[0].appendChild(link);
+        }
         console.log(this.brand)
         this.tabs = (data.tabs || []).map((tab: any) => ({
           title: tab.title ?? 'Sin título',

@@ -42,6 +42,9 @@ export class ContentfulService {
       primaryColor: entry.fields.primaryColor ?? '#ffffff',
       accentColor: entry.fields.accentColor ?? '#ff0000',
       textColor: entry.fields.textColor ?? '#000000',
+      seoTitle: entry.fields.seoTitle ?? '',
+      seoDescription: entry.fields.seoDescription ?? '',
+      faviconUrl: entry.fields.favicon?.fields?.file?.url ?? '',
       tabs: (entry.fields.tabs || []).map((tabRef: any, i: number) => {
         if (!tabRef?.fields) {
           console.warn(`Tab en posición ${i} no tiene fields definidos`, tabRef);
