@@ -29,6 +29,7 @@
         flex-direction: column;
         max-width: 274px;
         width: 100%;
+     
       .tab-button {
         display: flex;
         align-items: center;
@@ -51,6 +52,11 @@
         &.active {
           background: #1A1F71 !important;
           color: #fff  !important;
+          .tab-icon{
+            color: #fff !important;
+          }
+         
+        
           &:hover {
             background: #1A1F71 !important;
           }

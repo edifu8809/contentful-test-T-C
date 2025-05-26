@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ContentfulService } from 'src/app/contentful.service';
 import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
-import { Title, Meta } from '@angular/platform-browser';
+import { Title, Meta, SafeHtml, DomSanitizer } from '@angular/platform-browser';
 import gsap from 'gsap';
 
 @Component({
@@ -13,6 +13,7 @@ import gsap from 'gsap';
 export class TermsConditionsComponent implements OnInit {
   locale = 'es';
   slug = '';
+  sanitizedIcons: SafeHtml[] = [];
   brand: {
     logo: string;
     nombre: string;
@@ -29,6 +30,7 @@ export class TermsConditionsComponent implements OnInit {
   activeTab: number = 0;
 
   constructor(
+    private sanitizer: DomSanitizer,
     private route: ActivatedRoute,
     private contentful: ContentfulService,
     private titleService: Title,
@@ -42,12 +44,13 @@ export class TermsConditionsComponent implements OnInit {
       this.locale = langParam === 'en' ? 'en-US' : 'es-ES';
   
       this.contentful.getTermsWithFieldFallback(this.slug, this.locale).subscribe(data => {
+        console.log('DATA COMPLETA:', data); 
         if (!data) {
           console.warn('No se encontró contenido para este slug:', this.slug);
           return;
         }
   
-        // ✅ Configurar info de marca
+        // Configurar info de marca
         this.brand = {
           logo: data.logoUrl || '',
           nombre: data.nombre,
@@ -80,14 +83,21 @@ export class TermsConditionsComponent implements OnInit {
           document.getElementsByTagName('head')[0].appendChild(link);
         }
         console.log(this.brand)
-        this.tabs = (data.tabs || []).map((tab: any) => ({
-          title: tab.title ?? 'Sin título',
-          description: typeof tab.description === 'string'
-            ? tab.description
-            : documentToHtmlString(tab.description),
-          icon: tab.icon ?? ''
-        }));
-  
+        
+        this.tabs = (data.tabs || []).map((tab: any) => {
+          const iconHtml = tab.icon && tab.icon.nodeType === 'document'
+            ? documentToHtmlString(tab.icon)
+            : '';
+            
+          return {
+            title: tab.title ?? 'Sin título',
+            description: typeof tab.description === 'string'
+              ? tab.description
+              : documentToHtmlString(tab.description),
+            icon: this.sanitizer.bypassSecurityTrustHtml(tab.icon || '')
+          };
+        });
+      
         this.activeTab = 0;
         setTimeout(() => this.animateTab(0), 100);
       });

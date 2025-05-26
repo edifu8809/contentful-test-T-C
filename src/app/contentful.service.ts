@@ -54,7 +54,7 @@ export class ContentfulService {
         return {
           title: tab.title ?? 'Sin título',
           description: tab.description,
-          icon: tab.icon?.fields?.file?.url ?? ''
+          icon: tab.icon ?? null  
         };
       }).filter(Boolean) // elimina los nulls
     };

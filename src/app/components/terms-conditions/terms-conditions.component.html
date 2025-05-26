@@ -12,28 +12,19 @@
 <div class="tabs-container" [ngStyle]="{
   'background-color': brand?.primaryColor
 }">
- 
+
   <div class="tabs">
-    <button
-    [ngStyle]="{
-      'background-color': brand?.accentColor
-    }"
-      *ngFor="let tab of tabs; let i = index"
-      class="tab-button"
-      [class.active]="i === activeTab"
-      (click)="selectTab(i)"
-    >
-      <img [src]="tab.icon" alt="Icono" />
+    <button *ngFor="let tab of tabs; let i = index" class="tab-button" [class.active]="i === activeTab"
+      (click)="selectTab(i)">
+      <div class="tab-icon" [innerHTML]="tab.icon" [ngStyle]="{
+       'color': brand?.accentColor
+      }"></div>
       {{ tab.title }}
     </button>
   </div>
 
   <div class="tab-contents">
-    <div
-      *ngFor="let tab of tabs; let i = index"
-      class="tab-content"
-      [class.active]="i === activeTab"
-    >
+    <div *ngFor="let tab of tabs; let i = index" class="tab-content" [class.active]="i === activeTab">
       <div [ngStyle]="{
        
         'color': brand?.textColor
