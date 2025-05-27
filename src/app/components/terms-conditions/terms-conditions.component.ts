@@ -118,10 +118,10 @@ export class TermsConditionsComponent implements OnInit {
     }
   }
   enhanceDropdowns(): void {
-
-    const isMobile = window.innerWidth <= 768; // breakpoint 
-
+    const isMobile = window.innerWidth <= 768; // breakpoint
+  
     if (!isMobile) return; // solo ejecuta en móviles
+  
     const contents = document.querySelectorAll('.rich-text-content');
   
     contents.forEach(content => {
@@ -138,8 +138,15 @@ export class TermsConditionsComponent implements OnInit {
           const section = document.createElement('div');
           section.className = 'dropdown-content';
   
+          // Lógica para cerrar otros dropdowns al abrir uno nuevo
           button.onclick = () => {
-            section.classList.toggle('open');
+            // Cierra todos los demás dropdowns abiertos
+            document.querySelectorAll('.dropdown-content.open').forEach(openSection => {
+              openSection.classList.remove('open');
+            });
+  
+            // Abre el actual si no estaba ya abierto
+            section.classList.add('open');
           };
   
           child.replaceWith(button);
