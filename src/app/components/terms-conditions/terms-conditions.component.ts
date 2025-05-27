@@ -103,12 +103,45 @@ export class TermsConditionsComponent implements OnInit {
         });
       
         this.activeTab = 0;
-        setTimeout(() => this.animateTab(0), 100);
+        setTimeout(() => {
+          this.animateTab(this.activeTab);
+          this.enhanceDropdowns(); // transforma <h3> en acordeones
+        }, 100);
       });
     });
   }
   
-
+  enhanceDropdowns(): void {
+    const contents = document.querySelectorAll('.rich-text-content');
+  
+    contents.forEach(content => {
+      const children = Array.from(content.children);
+      let currentDropdown: HTMLElement | null = null;
+  
+      children.forEach(child => {
+        if (child.tagName === 'H2') {
+          const button = document.createElement('button');
+          button.textContent = child.textContent || '';
+          button.className = 'dropdown-toggle';
+          button.type = 'button';
+  
+          const section = document.createElement('div');
+          section.className = 'dropdown-content';
+  
+          button.onclick = () => {
+            section.classList.toggle('open');
+          };
+  
+          child.replaceWith(button);
+          button.insertAdjacentElement('afterend', section);
+          currentDropdown = section;
+        } else if (currentDropdown) {
+          currentDropdown.appendChild(child);
+        }
+      });
+    });
+  }
+  
 
   selectTab(index: number) {
     if (index === this.activeTab) return;

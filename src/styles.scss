@@ -5,4 +5,28 @@ body {
     background-color: #fff;
     margin: 0;
   }
+  .dropdown-toggle {
+    background: none;
+    border: none;
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-top: 1rem;
+    padding: 0.5rem;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .dropdown-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    padding: 0 0;
+  }
+  
+  .dropdown-content.open {
+    max-height: 1000px; // suficientemente alto
+    padding: 0.5rem 0;
+  }
   

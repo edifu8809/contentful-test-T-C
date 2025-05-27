@@ -25,8 +25,7 @@
 
   <div class="tab-contents">
     <div *ngFor="let tab of tabs; let i = index" class="tab-content" [class.active]="i === activeTab">
-      <div [ngStyle]="{
-       
+      <div class="rich-text-content" [ngStyle]="{  
         'color': brand?.textColor
       }" [innerHTML]="tab.description"></div>
     </div>
