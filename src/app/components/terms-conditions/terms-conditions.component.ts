@@ -138,15 +138,18 @@ export class TermsConditionsComponent implements OnInit {
           const section = document.createElement('div');
           section.className = 'dropdown-content';
   
-          // Lógica para cerrar otros dropdowns al abrir uno nuevo
           button.onclick = () => {
-            // Cierra todos los demás dropdowns abiertos
+            const isOpen = section.classList.contains('open');
+  
+            // Cierra todos los dropdowns
             document.querySelectorAll('.dropdown-content.open').forEach(openSection => {
               openSection.classList.remove('open');
             });
   
-            // Abre el actual si no estaba ya abierto
-            section.classList.add('open');
+            // Si no estaba abierto, lo abrimos
+            if (!isOpen) {
+              section.classList.add('open');
+            }
           };
   
           child.replaceWith(button);
@@ -158,6 +161,7 @@ export class TermsConditionsComponent implements OnInit {
       });
     });
   }
+  
   
 
   selectTab(index: number) {
