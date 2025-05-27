@@ -11,6 +11,7 @@ import gsap from 'gsap';
   styleUrls: ['./terms-conditions.component.scss']
 })
 export class TermsConditionsComponent implements OnInit {
+  private dropdownsEnhanced = false;
   locale = 'es';
   slug = '';
   sanitizedIcons: SafeHtml[] = [];
@@ -110,8 +111,17 @@ export class TermsConditionsComponent implements OnInit {
       });
     });
   }
-  
+  ngAfterViewInit(): void {
+    if (!this.dropdownsEnhanced) {
+      this.enhanceDropdowns();
+      this.dropdownsEnhanced = true;
+    }
+  }
   enhanceDropdowns(): void {
+
+    const isMobile = window.innerWidth <= 768; // breakpoint 
+
+    if (!isMobile) return; // solo ejecuta en móviles
     const contents = document.querySelectorAll('.rich-text-content');
   
     contents.forEach(content => {
