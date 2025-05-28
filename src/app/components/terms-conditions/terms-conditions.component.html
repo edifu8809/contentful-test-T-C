@@ -32,7 +32,7 @@
   <ng-container *ngIf="isMobile">
     <div class="tabs-mobile">
       <div *ngFor="let tab of tabs; let i = index" class="mobile-tab">
-        <button class="tab-button" (click)="toggleMobileTab(i)">
+        <button class="tab-button" [class.active]="i === activeMobileTab" (click)="toggleMobileTab(i)">
           <div class="tab-icon" [innerHTML]="tab.icon" [ngStyle]="{ 'color': brand?.accentColor }"></div>
           {{ tab.title }}
           <span class="chevron" [class.rotated]="i === activeMobileTab">&#9662;</span> <!-- ▼ -->
