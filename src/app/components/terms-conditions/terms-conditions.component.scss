@@ -5,6 +5,10 @@
   margin: 0 auto;
   padding: 1rem;
   display: flex;
+  @media (max-width: 991.98px){
+    width: auto;
+    max-width: 100%;
+  }
 }
 .container-header{
   margin-bottom: 4rem;
@@ -18,7 +22,7 @@
 }
 .header{
   img{
-    max-width: 140px;
+    max-width: 100px;
   }
   
 }
@@ -33,12 +37,69 @@
     margin-bottom: 30px;
   }
 }
+.tabs-mobile{
+    .mobile-tab {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      flex-direction: column;
+ 
+  
+    .tab-button {
+      background-color: rgba(26, 31, 113, 0.1) !important;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: none;
+      border: none;
+      font-family: "Muli", sans-serif;
+      padding: 0.75rem 1rem;
+      color: #444;
+      cursor: pointer;
+      border-radius: 50px 50px;
+      transition: background 0.2s, color 0.2s;
 
+      img {
+        width: 20px;
+        height: 20px;
+        object-fit: contain;
+      }
+
+      &.active {
+        background: #1A1F71 !important;
+        color: #fff  !important;
+        .tab-icon{
+          color: #fff !important;
+        }
+      
+      
+        &:hover {
+          background: #1A1F71 !important;
+        }
+      }
+
+      &:hover {
+        background-color: #eee !important;
+      }
+    }
+  }
+  .tab-content {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.4s ease, opacity 0.3s ease;
+  
+    &.active {
+      max-height: 2000px; // valor grande suficiente para contener el contenido máximo
+      opacity: 1;
+    }
+  }
+}
 .tabs-container {
     
     .tabs {
         display: flex;
-        gap: 0;
+        gap: 1rem;
         flex-wrap: wrap;
         border-bottom: 2px solid #e0e0e0;
         flex-direction: column;
@@ -57,7 +118,7 @@
         cursor: pointer;
         border-radius: 50px 0px 0px 50px;
         transition: background 0.2s, color 0.2s;
-        text-align: left;
+  
         img {
           width: 20px;
           height: 20px;

@@ -14,7 +14,9 @@ export class TermsConditionsComponent implements OnInit {
   private dropdownsEnhanced = false;
   locale = 'es';
   slug = '';
+  isMobile = false;
   sanitizedIcons: SafeHtml[] = [];
+  activeMobileTab: number | null = null;
   brand: {
     logo: string;
     nombre: string;
@@ -41,6 +43,8 @@ export class TermsConditionsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.checkIsMobile();
+    window.addEventListener('resize', this.checkIsMobile.bind(this));
     this.route.paramMap.subscribe(params => {
       this.slug = params.get('slug') || '';
       const langParam = params.get('lang') || 'es';
@@ -111,6 +115,14 @@ export class TermsConditionsComponent implements OnInit {
       });
     });
   }
+  ngOnDestroy(): void {
+    window.removeEventListener('resize', this.checkIsMobile.bind(this));
+  }
+  
+  checkIsMobile(): void {
+    this.isMobile = window.innerWidth <= 768;
+  }
+
   ngAfterViewInit(): void {
     if (!this.dropdownsEnhanced) {
       this.enhanceDropdowns();
@@ -176,5 +188,8 @@ export class TermsConditionsComponent implements OnInit {
       { autoAlpha: 0, y: 20 },
       { autoAlpha: 1, y: 0, duration: 0.5 }
     );
+  }
+  toggleMobileTab(index: number): void {
+    this.activeMobileTab = this.activeMobileTab === index ? null : index;
   }
 }

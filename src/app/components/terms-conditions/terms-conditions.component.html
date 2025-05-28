@@ -9,28 +9,43 @@
 </div>
 
 
-<div class="tabs-container" [ngStyle]="{
-  'background-color': brand?.primaryColor
-}">
+<div class="tabs-container" [ngStyle]="{ 'background-color': brand?.primaryColor }">
 
-  <div class="tabs">
-    <button *ngFor="let tab of tabs; let i = index" class="tab-button" [class.active]="i === activeTab"
-      (click)="selectTab(i)">
-      <div class="tab-icon" [innerHTML]="tab.icon" [ngStyle]="{
-       'color': brand?.accentColor
-      }"></div>
-      {{ tab.title }}
-    </button>
-  </div>
-
-  <div class="tab-contents">
-    <div *ngFor="let tab of tabs; let i = index" class="tab-content" [class.active]="i === activeTab">
-      <div class="rich-text-content" [ngStyle]="{  
-        'color': brand?.textColor
-      }" [innerHTML]="tab.description"></div>
+  <!-- Desktop version -->
+  <ng-container *ngIf="!isMobile">
+    <div class="tabs">
+      <button *ngFor="let tab of tabs; let i = index" class="tab-button" [class.active]="i === activeTab"
+        (click)="selectTab(i)">
+        <div class="tab-icon" [innerHTML]="tab.icon" [ngStyle]="{ 'color': brand?.accentColor }"></div>
+        {{ tab.title }}
+      </button>
     </div>
-  </div>
+
+    <div class="tab-contents">
+      <div *ngFor="let tab of tabs; let i = index" class="tab-content" [class.active]="i === activeTab">
+        <div class="rich-text-content" [ngStyle]="{ 'color': brand?.textColor }" [innerHTML]="tab.description"></div>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- Mobile version -->
+  <ng-container *ngIf="isMobile">
+    <div class="tabs-mobile">
+      <div *ngFor="let tab of tabs; let i = index" class="mobile-tab">
+        <button class="tab-button" (click)="toggleMobileTab(i)">
+          <div class="tab-icon" [innerHTML]="tab.icon" [ngStyle]="{ 'color': brand?.accentColor }"></div>
+          {{ tab.title }}
+        </button>
+
+        <div class="tab-content"  [class.active]="i === activeMobileTab">
+          <div class="rich-text-content" [ngStyle]="{ 'color': brand?.textColor }" [innerHTML]="tab.description"></div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
 </div>
+
 
 <div *ngIf="brand">
   <div class="container-footer">
@@ -40,5 +55,5 @@
     </div>
   </div>
 
-  
+
 </div>
