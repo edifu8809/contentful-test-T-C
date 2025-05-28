@@ -132,7 +132,7 @@ export class TermsConditionsComponent implements OnInit {
   enhanceDropdowns(): void {
     const isMobile = window.innerWidth <= 768; // breakpoint
   
-    if (!isMobile) return; // solo ejecuta en móviles
+    if (!isMobile) return;
   
     const contents = document.querySelectorAll('.rich-text-content');
   
@@ -143,24 +143,42 @@ export class TermsConditionsComponent implements OnInit {
       children.forEach(child => {
         if (child.tagName === 'H2') {
           const button = document.createElement('button');
-          button.textContent = child.textContent || '';
           button.className = 'dropdown-toggle';
           button.type = 'button';
   
+          // Crea span para el título
+          const titleSpan = document.createElement('span');
+          titleSpan.textContent = child.textContent || '';
+          titleSpan.className = 'dropdown-title';
+  
+          // Crea span para el símbolo
+          const symbolSpan = document.createElement('span');
+          symbolSpan.className = 'toggle-symbol';
+          symbolSpan.textContent = '+';
+  
+          // Agrega los spans al botón
+          button.appendChild(titleSpan);
+          button.appendChild(symbolSpan);
+  
+          // Crea el contenido
           const section = document.createElement('div');
           section.className = 'dropdown-content';
   
           button.onclick = () => {
             const isOpen = section.classList.contains('open');
   
-            // Cierra todos los dropdowns
+            // Cierra todos los dropdowns y cambia símbolos a +
             document.querySelectorAll('.dropdown-content.open').forEach(openSection => {
               openSection.classList.remove('open');
+              const btn = openSection.previousElementSibling as HTMLButtonElement;
+              if (btn?.querySelector('.toggle-symbol')) {
+                (btn.querySelector('.toggle-symbol') as HTMLElement).textContent = '+';
+              }
             });
   
-            // Si no estaba abierto, lo abrimos
             if (!isOpen) {
               section.classList.add('open');
+              symbolSpan.textContent = '–';
             }
           };
   
@@ -173,6 +191,7 @@ export class TermsConditionsComponent implements OnInit {
       });
     });
   }
+  
   
   
 
