@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 body {
-    font-family: 'Muli', sans-serif;
-    color: #333;
+  font-family: 'Varela Round', sans-serif;
+  color: #333;
     background-color: #fff;
     margin: 0;
   }
@@ -18,6 +18,10 @@ body {
     border-bottom: 1px solid #ccc;
   }
   
+  ul{ 
+    padding-left: 15px;
+  }
+  
   .dropdown-content {
     max-height: 0;
     overflow: hidden;
@@ -30,3 +34,10 @@ body {
     padding: 0.5rem 0;
   }
   
+  p{
+    font-weight: 300;
+    font-family: Muli, sans-serif;
+  }
+  b {
+    font-weight: bold;
+  }
