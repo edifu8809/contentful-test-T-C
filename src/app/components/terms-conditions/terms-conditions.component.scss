@@ -107,6 +107,7 @@
             font-size: 1.2rem;
             &:before {
               background: #ffffff;
+              transform: rotate(180deg);
             }
           }
 
@@ -119,7 +120,7 @@
       }
 
       &:hover {
-        background-color: #eee !important;
+        background-color: rgba(26, 31, 113, 0.1) !important;
       }
     }
   }
@@ -215,6 +216,12 @@
     // Mobile: estilo tipo dropdown
     @media (max-width: 768px) {
 
+      .tabs-mobile .tab-content.active {
+        max-height: inherit;
+    }
+      .tabs-mobile .tab-content.active{
+        padding-bottom: 20px;
+    }
       .tabs {
         flex-direction: column;
         border-bottom: none;
