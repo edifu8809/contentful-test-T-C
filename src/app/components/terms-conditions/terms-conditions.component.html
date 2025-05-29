@@ -35,7 +35,7 @@
         <button class="tab-button" [class.active]="i === activeMobileTab" (click)="toggleMobileTab(i)">
           <div class="tab-icon" [innerHTML]="tab.icon" [ngStyle]="{ 'color': brand?.accentColor }"></div>
           {{ tab.title }}
-          <span class="chevron" [class.rotated]="i === activeMobileTab">&#9662;</span> <!-- ▼ -->
+          <span class="chevron" [class.rotated]="i === activeMobileTab"></span> <!-- ▼ -->
         </button>
 
         <div class="tab-content"  [class.active]="i === activeMobileTab">
