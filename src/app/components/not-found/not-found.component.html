@@ -1,6 +1,10 @@
 <div class="not-found">
-    <h1>404</h1>
-    <p>Página no encontrada.</p>
-    <!-- <a routerLink="/">Volver al inicio</a> -->
-</div>
+  <h1 >404</h1>
+  <p *ngIf="lang === 'es'">Página no encontrada.</p>
+  <p *ngIf="lang === 'en'">Page not found.</p>
+
   
+  <!-- <a [routerLink]="['/', lang, 'terminos', 'marca-x']">
+    {{ lang === 'es' ? 'Volver al inicio' : 'Back to home' }}
+  </a> -->
+</div>

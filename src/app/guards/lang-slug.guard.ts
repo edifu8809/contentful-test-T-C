@@ -18,13 +18,11 @@ export class LangSlugGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> {
-    const lang = route.paramMap.get('lang') || '';
+    const lang = route.paramMap.get('lang') || 'es'; // default a 'es' si no hay lang
     const slug = route.paramMap.get('slug') || '';
   
-    // Validar que lang sea "es" o "en"
-    const validLangs = ['es', 'en'];
-    if (!validLangs.includes(lang)) {
-      return of(this.router.createUrlTree(['/404']));
+    if (!this.allowedLangs.includes(lang)) {
+      return of(this.router.createUrlTree([`/${lang}/404`]));
     }
   
     const localeMap: Record<string, string> = {
@@ -37,9 +35,9 @@ export class LangSlugGuard implements CanActivate {
     return this.contentfulService.getBrandTermsWithFallback(slug, fullLocale).pipe(
       map(res => {
         const isValid = res?.items?.length > 0;
-        return isValid ? true : this.router.createUrlTree(['/404']);
+        return isValid ? true : this.router.createUrlTree([`/${lang}/404`]);
       }),
-      catchError(() => of(this.router.createUrlTree(['/404'])))
+      catchError(() => of(this.router.createUrlTree([`/${lang}/404`])))
     );
   }
   

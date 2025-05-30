@@ -12,8 +12,10 @@ const routes: Routes = [
     component: TermsConditionsComponent,
     canActivate: [LangSlugGuard]
   },
-  { path: '404', component: NotFoundComponent },
-  { path: '**', redirectTo: '404' }
+   
+   { path: ':lang/404', component: NotFoundComponent },
+   { path: ':lang/**', redirectTo: ':lang/404' },
+   { path: '**', redirectTo: '/es/404' }
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
