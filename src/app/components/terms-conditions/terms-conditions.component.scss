@@ -96,6 +96,7 @@
         color: #fff  !important;
         .tab-icon{
           color: #fff !important;
+          
         }
         @media (max-width: 768px) {
           .chevron {
@@ -136,6 +137,7 @@
     }
   }
 }
+
 .tabs-container {
     padding: 44px 1rem;
     background-color: #fcfcfc !important;
@@ -158,7 +160,8 @@
         color: #444;
         cursor: pointer;
         text-align: left;
-        border-radius: 50px 0px 0px 50px;
+        margin-bottom: 15px;
+        border-radius: 50px 0 0 50px;
         transition: background 0.2s, color 0.2s;
   
         img {
@@ -172,6 +175,7 @@
           color: #fff  !important;
           .tab-icon{
             color: #fff !important;
+           
           }
          
         
